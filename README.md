@@ -19,9 +19,9 @@ Plugins are installer per-user, so you will need to give `android_studio_user`, 
 | `android_studio_url` | See [defaults/main.yml](./defaults/main.yml) | Base URL for the Android Studio tarball |
 | `android_studio_user` | `{{ ansible_user_id }}` | User to install plugins for. |
 
-## Installing plugins and themes
+## Installing plugins
 To install plugins for Android Studio, define the `android_studio_plugins` variable.  
-```
+```yaml
 android_studio_plugins:
   - 10233 # Discord Integration
   - 17718 # GitHub Copilot
