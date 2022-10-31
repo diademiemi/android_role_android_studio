@@ -1,7 +1,7 @@
 galaxy_info:
   author: diademiemi
   description: Ansible role to install Android Studio on Linux with plugins
-
+  role_name: android_studio
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   # issue_tracker_url: http://example.com/issue/tracker
