@@ -15,7 +15,7 @@ Plugins are installer per-user, so you will need to give `android_studio_user`, 
 ## Variables
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `android_studio_url_version` | `2021.3.1.17` | Default version of Android Studio to download |
+| `android_studio_version` | `2021.3.1.17` | Default version of Android Studio to download |
 | `android_studio_url` | See [defaults/main.yml](./defaults/main.yml) | Base URL for the Android Studio tarball |
 | `android_studio_user` | `{{ ansible_user_id }}` | User to install plugins for. |
 
