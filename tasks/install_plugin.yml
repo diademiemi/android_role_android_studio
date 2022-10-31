@@ -1,0 +1,21 @@
+- name: Get latest version of plugin
+  become: true
+  ansible.builtin.uri:
+    url: https://plugins.jetbrains.com/api/plugins/{{ android_studio_plugin }}/updates
+  register: android_studio_plugin_version
+  changed_when: false
+
+- name: Download plugin
+  become: true
+  ansible.builtin.get_url:
+    url: "https://plugins.jetbrains.com/files/{{ android_studio_plugin_version.json[0].file }}"
+    dest: "/tmp/android-studio-plugin-{{ android_studio_plugin }}.zip"
+    mode: 0644
+
+- name: Extract plugin to directory
+  become: true
+  become_user: "{{ android_studio_user }}"
+  ansible.builtin.unarchive:
+    src: "/tmp/android-studio-plugin-{{ android_studio_plugin }}.zip"
+    dest: "~/.local/share/Google/AndroidStudio{{ android_studio_url_version | regex_search('\\d{1,}\\.\\d{1,}') }}/"
+    remote_src: true

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Android Studio
+Icon=/opt/studio/bin/studio.svg
+Exec="/opt/studio/bin/studio.sh" %f
+Comment=Official IDE for Android app development.
+Categories=Development;IDE;
+Terminal=false
+StartupNotify=true

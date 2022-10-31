@@ -1,0 +1,63 @@
+---
+- name: Download Android Studio
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ android_studio_url }}"
+    dest: /tmp/android-studio-{{ android_studio_url_version }}.tar.gz
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Ensure /opt/studio exists
+  become: true
+  ansible.builtin.file:
+    path: /opt/studio
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Extract Android Studio to /opt
+  become: true
+  ansible.builtin.unarchive:
+    src: /tmp/android-studio-{{ android_studio_url_version }}.tar.gz
+    dest: /opt/studio
+    remote_src: true
+    extra_opts:
+      - --strip-components=1
+
+- name: Create desktop entry
+  become: true
+  ansible.builtin.copy:
+    src: android_studio.desktop
+    dest: /usr/share/applications/android_studio.desktop
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Create studio shell script
+  become: true
+  ansible.builtin.copy:
+    src: studio
+    dest: /usr/local/bin/studio
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Ensure plugins directory exists
+  become: true
+  become_user: "{{ android_studio_user }}"
+  ansible.builtin.file:
+    path: "~/.local/share/Google/AndroidStudio{{ android_studio_url_version | regex_search('\\d{1,}\\.\\d{1,}') }}/"
+    state: directory
+    mode: 0755
+    owner: "{{ android_studio_user }}"
+    group: "{{ android_studio_user }}"
+  when: android_studio_plugins is defined
+
+- name: Import task to install plugin
+  include_tasks: install_plugin.yml
+  when: android_studio_plugins is defined
+  loop: "{{ android_studio_plugins }}"
+  loop_control:
+    loop_var: android_studio_plugin
