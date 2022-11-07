@@ -3,7 +3,7 @@
   become: true
   ansible.builtin.get_url:
     url: "{{ android_studio_url }}"
-    dest: /tmp/android-studio-{{ android_studio_url_version }}.tar.gz
+    dest: /tmp/android-studio-{{ android_studio_version }}.tar.gz
     mode: 0644
     owner: root
     group: root
@@ -20,7 +20,7 @@
 - name: Extract Android Studio to /opt
   become: true
   ansible.builtin.unarchive:
-    src: /tmp/android-studio-{{ android_studio_url_version }}.tar.gz
+    src: /tmp/android-studio-{{ android_studio_version }}.tar.gz
     dest: /opt/studio
     remote_src: true
     extra_opts:
@@ -48,7 +48,7 @@
   become: true
   become_user: "{{ android_studio_user }}"
   ansible.builtin.file:
-    path: "~/.local/share/Google/AndroidStudio{{ android_studio_url_version | regex_search('\\d{1,}\\.\\d{1,}') }}/"
+    path: "~/.local/share/Google/AndroidStudio{{ android_studio_version | regex_search('\\d{1,}\\.\\d{1,}') }}/"
     state: directory
     mode: 0755
     owner: "{{ android_studio_user }}"

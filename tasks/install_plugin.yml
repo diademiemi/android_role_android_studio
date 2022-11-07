@@ -17,5 +17,5 @@
   become_user: "{{ android_studio_user }}"
   ansible.builtin.unarchive:
     src: "/tmp/android-studio-plugin-{{ android_studio_plugin }}.zip"
-    dest: "~/.local/share/Google/AndroidStudio{{ android_studio_url_version | regex_search('\\d{1,}\\.\\d{1,}') }}/"
+    dest: "~/.local/share/Google/AndroidStudio{{ android_studio_version | regex_search('\\d{1,}\\.\\d{1,}') }}/"
     remote_src: true
